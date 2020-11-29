@@ -1,0 +1,89 @@
+version: "3"
+
+services:
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+  todo-api-1:
+    build:
+      context: ./todo-api
+      dockerfile: Dockerfile
+    hostname: todo-api-1
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PREFIX=todo1
+      - PORT=3000
+      - HOST=0.0.0.0
+      - TODO_ENTITY=tasks
+    ports:
+      - "3000:3000"
+  todo-api-2:
+    build:
+      context: ./todo-api
+      dockerfile: Dockerfile
+    hostname: todo-api-2
+    depends_on: 
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PREFIX=todo2
+      - PORT=3001
+      - HOST=0.0.0.0
+      - TODO_ENTITY=invites
+    ports:
+      - "3001:3001"
+  web-api:
+    build:
+      context: ./web-api
+      dockerfile: Dockerfile
+    hostname: web-api
+    depends_on: 
+      - todo-api-1
+      - todo-api-2
+    environment:
+      - PORT=3002
+      - HOST=0.0.0.0
+      - TASK_HOST=todo-api-1:3000
+      - INVITE_HOST=todo-api-2:3001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PREFIX=queue
+    ports:
+      - "3002:3002"
+  api-test:
+    build:
+      context: ./todo-int-tests
+      dockerfile: Dockerfile
+    environment:
+      - TASK_HOST=todo-api-1:3000
+      - INVITE_HOST=todo-api-2:3001
+      - WEB_HOST=web-api:3002  
+    depends_on: 
+      - web-api
+  web-app:
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile
+    hostname: web-app
+    depends_on: 
+      - api-test
+    ports:
+      - "8080:8080"
