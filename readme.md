@@ -49,7 +49,7 @@ If you use the application you will realise that there some issues that you and 
 4. When the WEB-APP requests the TODOs, even if some of the sources fail it would  be great if the user can see the data from the other source
 5. The WEB-APP doesn't take into account failures calling the REST API provided by the WEB-API
 6. It seems the project doesn't have any unit tests. What you think about that?
-7. From time to time the external APIs take more than the expected (more than 2 seconds). Maybe it would be great to bring some mechanism to give the user a better experience
+7. From time to time the external APIs take more than the expected (more than 2 seconds). It would be great to bring some mechanism to give the user a better experience
 
 ## What you need to do
 
