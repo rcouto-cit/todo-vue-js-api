@@ -5,9 +5,9 @@ Hi, it seems you are the new software engineer for the TODO Solution project. On
 
 ## Solution and Architecture
 
-Basically the TODO Solution is a web application that helps its users to manage their tasks or invites. The application is managed by a docker-compose file that is reponsible to build the artefacts and make them available to each other.
+Basically the TODO Solution is a web application that helps its users to manage their tasks or invites. The application is managed by a docker-compose file that is reponsible to build the artifacts and make them available to each other.
 
-Inside this environment we have one application that is responsible to provide the user interface (WEB-APP) and another is responsible to provide as RESTFULL API that will be consumed by the web interface (WEB-API).
+Inside this environment we have one application that is responsible to provide the user interface (WEB-APP) and another is responsible to provide as RESTFUL API that will be consumed by the web interface (WEB-API).
 
 ![Architecture Reference](TODOSolution.png)
 
@@ -43,17 +43,17 @@ And if you go to http://127.0.0.1:8080 in your browser you should see something 
 
 If you use the application you will realise that there some issues that you and your team need to solve. I will list some of them here, but you may find other else along the way. Nobody knows.
 
-1. When the WEB-API application is running it doesn't take into account the errors that the integrations can responde to it;
+1. When the WEB-API application is running it doesn't take into account the errors that the integrations can throws;
 2. There is no separation of concerns on the WEB-API. The code needs to be better designed to make it more readable and understandable
 3. There is a issue when you are trying to edit the TODOs that came from one of the sources;
 4. When the WEB-APP requests the TODOs, even if some of the sources fail it would  be great if the user can see the data from the other source
 5. The WEB-APP doesn't take into account failures calling the REST API provided by the WEB-API
 6. It seems the project doesn't have any unit tests. What you think about that?
-7. From time to time the external APIs take more than time than the expected. Maybe it would be great to bring some mechanism to give the user a better experience
+7. From time to time the external APIs take more than the expected (more than 2 seconds). Maybe it would be great to bring some mechanism to give the user a better experience
 
 ## What you need to do
 
-Our team has a reputation that we can trust, whatver the challenge. Thus, you all will have sometime to engage on understand the application and try to find a solution for some of the issues reported above.
+Our team has a reputation that we can trust, whatever the challenge. Thus, you all will have sometime to engage on understand the application and try to find a solution for some of the issues reported above.
 
 Given the time you have we don't expect the best solution but we will evaluate the analytical way to find the solution. You can use any tool available: books, internet, request help from some friend, anything.
 
