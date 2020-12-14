@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+  todo-api-1:
+    build:
+      context: ./todo-api
+      dockerfile: Dockerfile
+    hostname: todo-api-1
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PREFIX=todo1
+      - PORT=3000
+      - HOST=0.0.0.0
+      - TODO_ENTITY=tasks
+    ports:
+      - "3000:3000"
+  todo-api-2:
+    build:
+      context: ./todo-api
+      dockerfile: Dockerfile
+    hostname: todo-api-2
+    depends_on: 
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PREFIX=todo2
+      - PORT=3001
+      - HOST=0.0.0.0
+      - TODO_ENTITY=invites
+    ports:
+      - "3001:3001"

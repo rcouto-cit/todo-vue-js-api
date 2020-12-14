@@ -10,7 +10,7 @@ require("dotenv").config();
 /*
   Configuration and settings
 */
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3002;
 const HOST = process.env.HOST || "localhost";
 const TASK_HOST = process.env.TASK_HOST || "0.0.0.0:3000";
 const INVITE_HOST = process.env.INVITE_HOST || "0.0.0.0:3001";
